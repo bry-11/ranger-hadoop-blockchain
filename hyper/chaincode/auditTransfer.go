@@ -8,11 +8,11 @@ import (
 	"log"
 
 	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
-	"github.com/ranger-hadoop-blockchain/hyper/chaincode/smartContract"
+	"github.com/ranger-hadoop-blockchain/hyper/chaincode/auditContract"
 )
 
 func main() {
-	assetChaincode, err := contractapi.NewChaincode(&smartContract.SmartContract{})
+	assetChaincode, err := contractapi.NewChaincode(&auditContract.AuditContract{})
 	if err != nil {
 		log.Panicf("Error creating chaincode: %v", err)
 	}
