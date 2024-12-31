@@ -8,6 +8,7 @@
 
 /hyper/bin
 /hyper/log.txt
+/hyper/basic.tar.gz
 /hyper/chaincode/vendor
 /hyper/channel-artifacts
 /hyper/organizations/ordererOrganizations
