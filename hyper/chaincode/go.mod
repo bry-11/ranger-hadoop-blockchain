@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-go
+module github.com/ranger-hadoop-blockchain/hyper/chaincode
 
 go 1.22.0
 
