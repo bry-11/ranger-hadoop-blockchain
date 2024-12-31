@@ -1,0 +1,25 @@
+# Imagen base
+FROM node:16
+
+# Instalar herramientas CLI necesarias
+RUN apt-get update && apt-get install -y \
+    bash \
+    curl
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copiar los scripts CLI
+# COPY audit-scripts/ ./audit-scripts/
+# RUN chmod +x ./audit-scripts/*.sh
+
+# Copiar el código del middleware
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+
+# Exponer el puerto
+EXPOSE 8080
+
+# Comando de inicio
+CMD ["node", "middleware.js"]

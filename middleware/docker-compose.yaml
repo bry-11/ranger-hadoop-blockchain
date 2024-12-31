@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  middleware:
+    build:
+      context: .
+    container_name: middleware
+    ports:
+      - '8080:8080'
+    networks:
+      - byfn
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  byfn:
+    external: true # Usar la red creada previamente en Docker
