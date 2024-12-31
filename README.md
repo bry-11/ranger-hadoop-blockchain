@@ -2,8 +2,14 @@
 
 ## Blockchain configuration (Hyperledger fabric)
 
-- To create
+- To build docker environment and create the channel execute:
 
 ```sh
-./hyper.sh up
+./hyper.sh up createChannel
+```
+
+- To install smart contract execute:
+
+```sh
+./hyper.sh deployCC
 ```
