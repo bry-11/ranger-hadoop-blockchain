@@ -1,5 +1,11 @@
 .idea
-/hyper/scripts
-/hyper/channel-artifacts
-/hyper/crypto-config
-/hyper/commands
+/builders
+
+/ci
+
+/hyper/bin
+/hyper/organizations/ordererOrganizations
+/hyper/organizations/peerOrganizations
+
+/middleware/node_modules
+/middleware/package-lock.json
