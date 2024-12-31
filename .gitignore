@@ -1,9 +1,15 @@
 .idea
+
+/asset-transfer-basic
+
 /builders
 
 /ci
 
 /hyper/bin
+/hyper/log.txt
+/hyper/chaincode/vendor
+/hyper/channel-artifacts
 /hyper/organizations/ordererOrganizations
 /hyper/organizations/peerOrganizations
 
