@@ -40,3 +40,11 @@ export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.e
 export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
 export CORE_PEER_ADDRESS=localhost:7051
 ```
+
+## Apache Ranger configuration
+
+- To raise the apache ranger docker environment, we need to access the ranger folder and execute the command:
+
+```bash
+docker-compose up -d
+```
