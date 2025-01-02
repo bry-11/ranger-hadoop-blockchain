@@ -38,6 +38,6 @@ app.post('/audit', (req, res) => {
 });
 
 // Iniciar el servidor
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Middleware server running at http://localhost:${port}`);
 });

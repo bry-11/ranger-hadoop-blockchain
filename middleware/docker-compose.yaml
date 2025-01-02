@@ -7,11 +7,11 @@ services:
     container_name: middleware
     ports:
       - '8080:8080'
-    networks:
-      - byfn
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/app
 
 networks:
-  byfn:
-    external: true # Usar la red creada previamente en Docker
+  default:
+    name: ranger-env
+    external: true
