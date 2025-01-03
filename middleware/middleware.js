@@ -18,7 +18,7 @@ app.post('/audit', (req, res) => {
   }
 
   // Construir el comando para ejecutar el script CLI en el contenedor `cli`
-  const command = `docker exec cli scripts/register-audit.sh ${userID} ${resource} ${action} ${result} ${timestamp}`;
+  const command = `docker exec cli scripts/registerAudit.sh ${userID} ${resource} ${action} ${result} ${timestamp}`;
 
   // Ejecutar el comando
   exec(command, (error, stdout, stderr) => {
