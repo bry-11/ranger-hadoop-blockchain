@@ -26,18 +26,18 @@ type AuditStruct struct {
 
 // InitLedger adds a base set of assets to the ledger
 func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
-	assets := []AuditStruct{
+	audits := []AuditStruct{
 		{ID: "1", User: "user123", Resource: "resourceX", Action: "read", Status: "success",Timestamp: "2024-12-21T10:00:00"},
 	}
 
-	for _, asset := range assets {
-		assetJSON, err := json.Marshal(asset)
+	for _, audit := range audits {
+		assetJSON, err := json.Marshal(audit)
 		if err != nil {
 			println("error");
 			return err
 		}
 
-		err = ctx.GetStub().PutState(asset.ID, assetJSON)
+		err = ctx.GetStub().PutState(audit.ID, assetJSON)
 		if err != nil {
 			return fmt.Errorf("failed to put to world state. %v", err)
 		}
@@ -46,30 +46,36 @@ func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 	return nil
 }
 
-// CreateAsset issues a new asset to the world state with given details.
-// func (s *AuditContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, color string, size int, owner string, appraisedValue int) error {
-// 	exists, err := s.AssetExists(ctx, id)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	if exists {
-// 		return fmt.Errorf("the asset %s already exists", id)
-// 	}
+// CreateAudit issues a new audit to the world state with given details.
+func (s *AuditContract) CreateAudit(ctx contractapi.TransactionContextInterface, id string, user string, resource string, action string, status string, timestamp string) error {
+	// Leer del ledger para verificar estado actual
+    // auditKey, _ := ctx.GetStub().CreateCompositeKey("audit", []string{user, resource, timestamp})
+	// auditKey:=uuid.New().String()
 
-// 	asset := Asset{
-// 		ID:             id,
-// 		Color:          color,
-// 		Size:           size,
-// 		Owner:          owner,
-// 		AppraisedValue: appraisedValue,
-// 	}
-// 	assetJSON, err := json.Marshal(asset)
-// 	if err != nil {
-// 		return err
-// 	}
+	// exists, err := s.AuditExists(ctx, auditKey)
+	// if err != nil {
+	// 	return err
+	// }
+	// if exists {
+	// 	return fmt.Errorf("the audit %s already exists", auditKey)
+	// }
 
-// 	return ctx.GetStub().PutState(id, assetJSON)
-// }
+	audit := AuditStruct{
+		ID: id,
+		User: user,
+		Resource: resource,
+		Action: action,
+		Status: status,
+		Timestamp: timestamp,
+	}
+
+	auditJSON, err := json.Marshal(audit)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(audit.ID, auditJSON)
+}
 
 // ReadAsset returns the asset stored in the world state with given id.
 // func (s *AuditContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
@@ -129,15 +135,15 @@ func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 // 	return ctx.GetStub().DelState(id)
 // }
 
-// AssetExists returns true when asset with given ID exists in world state
-// func (s *AuditContract) AssetExists(ctx contractapi.TransactionContextInterface, id string) (bool, error) {
-// 	assetJSON, err := ctx.GetStub().GetState(id)
-// 	if err != nil {
-// 		return false, fmt.Errorf("failed to read from world state: %v", err)
-// 	}
+// AuditExists returns true when asset with given ID exists in world state
+func (s *AuditContract) AuditExists(ctx contractapi.TransactionContextInterface, id string) (bool, error) {
+	auditJSON, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return false, fmt.Errorf("failed to read from world state: %v", err)
+	}
 
-// 	return assetJSON != nil, nil
-// }
+	return auditJSON != nil, nil
+}
 
 // TransferAsset updates the owner field of asset with given id in world state, and returns the old owner.
 // func (s *AuditContract) TransferAsset(ctx contractapi.TransactionContextInterface, id string, newOwner string) (string, error) {
@@ -162,30 +168,30 @@ func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 // 	return oldOwner, nil
 // }
 
-// GetAllAssets returns all assets found in world state
-// func (s *AuditContract) GetAllAssets(ctx contractapi.TransactionContextInterface) ([]*Asset, error) {
-// 	// range query with empty string for startKey and endKey does an
-// 	// open-ended query of all assets in the chaincode namespace.
-// 	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer resultsIterator.Close()
+// GetAllAudits returns all audit found in world state
+func (s *AuditContract) GetAllAudits(ctx contractapi.TransactionContextInterface) ([]*AuditStruct, error) {
+	// range query with empty string for startKey and endKey does an
+	// open-ended query of all audit in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
 
-// 	var assets []*Asset
-// 	for resultsIterator.HasNext() {
-// 		queryResponse, err := resultsIterator.Next()
-// 		if err != nil {
-// 			return nil, err
-// 		}
+	var audits []*AuditStruct
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
 
-// 		var asset Asset
-// 		err = json.Unmarshal(queryResponse.Value, &asset)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		assets = append(assets, &asset)
-// 	}
+		var audit AuditStruct
+		err = json.Unmarshal(queryResponse.Value, &audit)
+		if err != nil {
+			return nil, err
+		}
+		audits = append(audits, &audit)
+	}
 
-// 	return assets, nil
-// }
+	return audits, nil
+}
