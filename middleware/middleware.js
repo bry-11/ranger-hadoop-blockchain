@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { exec } = require('child_process');
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 // Middleware para parsear JSON
 app.use(bodyParser.json());
@@ -31,11 +31,12 @@ app.post('/init', (req, res) => {
 });
 
 app.post('/audit', (req, res) => {
+  console.log(req.body);
   const { userID, resource, action, result, timestamp } = req.body;
 
   // Validar los datos de entrada
   if (!userID || !resource || !action || !result || !timestamp) {
-    return res.status(400).send('Missing required fields');
+    return res.status(406).send('Missing required fields');
   }
 
   // Construir el comando para ejecutar el script CLI en el contenedor `cli`
