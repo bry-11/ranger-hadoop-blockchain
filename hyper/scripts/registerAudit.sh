@@ -2,11 +2,7 @@
 
 # Asignar los parámetros a variables
 mode=$1
-userID=$2
-resource=$3
-action=$4
-result=$5
-timestamp=$6
+jsonData=$2
 
 
 function initializeAudits() {
@@ -43,7 +39,7 @@ function registerAudit() {
         --tlsRootCertFiles ${PWD}/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
         --peerAddresses peer0.org2.example.com:9051 \
         --tlsRootCertFiles ${PWD}/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-        -c "$(echo '{"function":"CreateAudit","Args":["'"$uuid"'","'"$userID"'","'"$resource"'","'"$action"'","'"$result"'","'"$timestamp"'"]}')"
+        -c "{\"function\":\"CreateAudit\",\"Args\":[\"$uuid\",\"$jsonData\"]}"
 }
 
 if [ "$mode" == "init" ]; then
@@ -51,8 +47,6 @@ if [ "$mode" == "init" ]; then
 elif [ "$mode" == "getAll" ]; then
     getAllAudits
 elif [ "$mode" == "register" ]; then
-    # Generar UUID
-    # uuid=$(uuidgen)
     uuid=$(openssl rand -hex 16 | sed 's/^\(.\{8\}\)\(.\{4\}\)\(.\{4\}\)\(.\{4\}\)\(.\{12\}\)$/\1-\2-\3-\4-\5/')
     registerAudit
     # Mostrar el UUID generado
