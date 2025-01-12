@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
+	"github.com/ranger-hadoop-blockchain/hyper/chaincode/utils"
 )
 
 // AuditContract provides functions for managing an Asset
@@ -17,17 +18,38 @@ type AuditContract struct {
 // golang keeps the order when marshal to json but doesn't order automatically
 type AuditStruct struct {
 	ID        string `json:"id"`
-	User      string `json:"user"`
-	Resource  string `json:"resource"`
-	Action    string `json:"action"`
-	Status    string `json:"status"`
+	Repo      string `json:"repo"`
+	Result  int `json:"result"`
+	Tags    []string `json:"tags"`
+	PolicyVersion    int `json:"policyVersion"`
+	Resource string `json:"resource"`
 	Timestamp string `json:"timestamp"`
+	CliIP string `json:"cliIP"`
+	Policy int `json:"policy"`
+	ReqUser string `json:"reqUser"`
+	EvtTime string `json:"evtTime"`
+	ZoneName string `json:"zoneName"`
+	AgentHost string `json:"agentHost"`
+	ResType string `json:"resType"`
+	SeqNum int `json:"seq_num"`
+	Cluster string `json:"cluster"`
+	ReqData string `json:"reqData"`
+	EventCount int `json:"event_count"`
+	EventDurMs int `json:"event_dur_ms"`
+	Action string `json:"action"`
+	Reason string `json:"reason"`
+	LogType string `json:"logType"`
+	RepoType int `json:"repoType"`
+	Sess string `json:"sess"`
+	Agent string `json:"agent"`
+	Access string `json:"access"`
+	Enforcer string `json:"enforcer"`
 }
 
 // InitLedger adds a base set of assets to the ledger
 func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	audits := []AuditStruct{
-		{ID: "1", User: "user123", Resource: "resourceX", Action: "read", Status: "success",Timestamp: "2024-12-21T10:00:00"},
+		// {ID: "1", User: "user123", Resource: "resourceX", Action: "read", Status: "success",Timestamp: "2024-12-21T10:00:00"},
 	}
 
 	for _, audit := range audits {
@@ -47,31 +69,17 @@ func (s *AuditContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 }
 
 // CreateAudit issues a new audit to the world state with given details.
-func (s *AuditContract) CreateAudit(ctx contractapi.TransactionContextInterface, id string, user string, resource string, action string, status string, timestamp string) error {
-	// Leer del ledger para verificar estado actual
-    // auditKey, _ := ctx.GetStub().CreateCompositeKey("audit", []string{user, resource, timestamp})
-	// auditKey:=uuid.New().String()
-
-	// exists, err := s.AuditExists(ctx, auditKey)
-	// if err != nil {
-	// 	return err
-	// }
-	// if exists {
-	// 	return fmt.Errorf("the audit %s already exists", auditKey)
-	// }
-
-	audit := AuditStruct{
-		ID: id,
-		User: user,
-		Resource: resource,
-		Action: action,
-		Status: status,
-		Timestamp: timestamp,
+func (s *AuditContract) CreateAudit(ctx contractapi.TransactionContextInterface, id string, jsonData string) error {
+	jsonValid := utils.PreprocessToJSON(jsonData)
+	var audit AuditStruct
+	err := json.Unmarshal([]byte(jsonValid), &audit)
+	if err != nil {
+		return fmt.Errorf("failed to parse JSON: %v", err)
 	}
 
 	auditJSON, err := json.Marshal(audit)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to parse struct: %v", err)
 	}
 
 	return ctx.GetStub().PutState(audit.ID, auditJSON)
