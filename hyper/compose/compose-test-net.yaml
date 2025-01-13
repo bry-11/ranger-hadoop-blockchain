@@ -14,8 +14,9 @@ volumes:
     name: peer0.org2.example.com
 
 networks:
-  test:
-    name: fabric_test
+  default:
+    name: blockchain-env
+    external: true
 
 services:
   orderer.example.com:
@@ -57,8 +58,6 @@ services:
       - 7050:7050
       - 7053:7053
       - 9443:9443
-    networks:
-      - test
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
@@ -96,8 +95,6 @@ services:
     ports:
       - 7051:7051
       - 9444:9444
-    networks:
-      - test
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
@@ -135,8 +132,6 @@ services:
     ports:
       - 9051:9051
       - 9445:9445
-    networks:
-      - test
 
   cli:
     container_name: cli
@@ -168,5 +163,3 @@ services:
       - orderer.example.com
       - peer0.org1.example.com
       - peer0.org2.example.com
-    networks:
-      - test
