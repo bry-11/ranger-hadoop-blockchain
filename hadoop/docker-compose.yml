@@ -141,5 +141,5 @@ volumes:
 
 networks:
   default:
-    name: ranger-env
+    name: blockchain-env
     external: true
