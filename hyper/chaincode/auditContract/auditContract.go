@@ -19,27 +19,27 @@ type AuditContract struct {
 type AuditStruct struct {
 	ID        string `json:"id"`
 	Repo      string `json:"repo"`
-	Result  int `json:"result"`
+	Result  string `json:"result"`
 	Tags    []string `json:"tags"`
-	PolicyVersion    int `json:"policyVersion"`
+	PolicyVersion    string `json:"policyVersion"`
 	Resource string `json:"resource"`
 	Timestamp string `json:"timestamp"`
 	CliIP string `json:"cliIP"`
-	Policy int `json:"policy"`
+	Policy string `json:"policy"`
 	ReqUser string `json:"reqUser"`
 	EvtTime string `json:"evtTime"`
 	ZoneName string `json:"zoneName"`
 	AgentHost string `json:"agentHost"`
 	ResType string `json:"resType"`
-	SeqNum int `json:"seq_num"`
+	SeqNum string `json:"seq_num"`
 	Cluster string `json:"cluster"`
 	ReqData string `json:"reqData"`
-	EventCount int `json:"event_count"`
-	EventDurMs int `json:"event_dur_ms"`
+	EventCount string `json:"event_count"`
+	EventDurMs string `json:"event_dur_ms"`
 	Action string `json:"action"`
 	Reason string `json:"reason"`
 	LogType string `json:"logType"`
-	RepoType int `json:"repoType"`
+	RepoType string `json:"repoType"`
 	Sess string `json:"sess"`
 	Agent string `json:"agent"`
 	Access string `json:"access"`

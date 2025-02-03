@@ -23,7 +23,7 @@ func PreprocessToJSON(input string) string {
 			value := strings.TrimSpace(matches[2])
 
 			// Procesar el valor según su tipo
-			if isNumeric(value) || isBoolean(value) || isArray(value) {
+			if isBoolean(value) || isArray(value) {
 				// Dejar valores numéricos, booleanos y arreglos como están
 				jsonPairs = append(jsonPairs, fmt.Sprintf(`"%s":%s`, key, value))
 			} else {
