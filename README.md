@@ -1,5 +1,11 @@
 # ranger-hadoop-blockchain
 
+Before running the containers, you must create the network for the communication of all the containers, with the following command :
+
+```bash
+docker network create blockchain-env
+```
+
 ## Blockchain configuration (Hyperledger fabric)
 
 - To build docker environment and create the channel execute:
@@ -13,6 +19,8 @@
 ```sh
 ./hyper.sh deployCC
 ```
+
+### To interact locally with the blockchain network
 
 - To interact with the blockchain network, we must set the following environment variables
 
@@ -43,12 +51,6 @@ export CORE_PEER_ADDRESS=localhost:7051
 
 ## Apache Ranger configuration
 
-- before executing any command, you must create the network that will interact the apache ranger and hadoop containers.
-
-```bash
-docker network create ranger-env
-```
-
 - To raise the apache ranger docker environment, we need to access the ranger folder and execute the command:
 
 ```bash
@@ -60,4 +62,20 @@ docker-compose up -d
 ```bash
 user: admin
 pass: rangeradmin1
+```
+
+## Middleware configuration
+
+- To raise the middleware docker environment, we need to access the middleware folder and execute the command:
+
+```bash
+docker-compose up -d
+```
+
+## Hadoop configuration
+
+- To raise the hadoop docker environment, we need to access the hadoop folder and execute the command:
+
+```bash
+docker-compose up -d
 ```
