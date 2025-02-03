@@ -9,10 +9,6 @@ RUN apt-get update && apt-get install docker.io -y \
 # Directorio de trabajo
 WORKDIR /app
 
-# Copiar los scripts CLI
-# COPY audit-scripts/ ./audit-scripts/
-# RUN chmod +x ./audit-scripts/*.sh
-
 # Copiar el código del middleware
 COPY package.json package-lock.json ./
 RUN npm install

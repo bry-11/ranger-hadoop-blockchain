@@ -80,7 +80,7 @@ app.get('/list', (req, res) => {
     }
 
     console.log(`Stdout: ${stdout}`);
-    return res.status(200).send('Audit registered successfully');
+    return res.status(200).send(stdout);
   });
 });
 
