@@ -6,7 +6,6 @@
 
 /ci
 
-/hyper/bin
 /hyper/log.txt
 /hyper/basic.tar.gz
 /hyper/chaincode/vendor
